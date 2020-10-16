@@ -1,6 +1,12 @@
 const express = require("express"),
   server = express();
 
+// Add headers
+server.use(function (req, res, next) {
+  res.setHeader("Access-Control-Allow-Origin", "http://localhost:3000");
+  next();
+});
+
 //setting the port.
 server.set("port", process.env.PORT || 5000);
 
@@ -14,22 +20,25 @@ var path = "sample.xml";
 var fs = require("fs");
 var xml2js = require("xml2js");
 var parser = new xml2js.Parser({ explicitArray: false });
+var cors = require("cors");
 
-server.get("/car/:NumberPlate?", (req, res, next) => {
-  const numberPlate = req.params.NumberPlate;
-  getJsonData().then((jsonData) => {
-    filterWithNumberPlate(jsonData, numberPlate)
-      .then((response) => {
-        res.header("Content-Type", "application/json");
-        res.type("json").send(JSON.stringify(response, null, 4) + "\n");
-      })
-      .catch(() => {
-        res.json("No data available");
-      });
-  });
+server.get("/car/:NumberPlate?", cors(), (req, res, next) => {
+  getJsonData()
+    .then((jsonData) => {
+      const numberPlate = req.params.NumberPlate;
+      filterWithNumberPlate(jsonData, numberPlate.toUpperCase())
+        .then((response) => {
+          res.header("Content-Type", "application/json");
+          res.type("json").send(JSON.stringify(response, null, 4) + "\n");
+        })
+        .catch(() => {
+          res.json("No data available");
+        });
+    })
+    .catch(() => {});
 });
 
-server.get("/person/:id?/car", (req, res, next) => {
+server.get("/person/:id?/car", cors(), (req, res, next) => {
   const id = req.params.id;
   getJsonData().then((jsonData) => {
     getPersonCars(jsonData, id)
@@ -58,7 +67,7 @@ server.get("/getPersonsByCar?:color", (req, res, next) => {
   });
 });
 
-server.get("/getPersonsOlderThan?:age", (req, res, next) => {
+server.get("/getPersonsOlderThan?:age", cors(), (req, res, next) => {
   const age = req.query.age;
   getJsonData().then((jsonData) => {
     filterPersonByAge(jsonData, age)
@@ -72,7 +81,7 @@ server.get("/getPersonsOlderThan?:age", (req, res, next) => {
   });
 });
 
-server.get("/getPersonsWithInsurance", (req, res, next) => {
+server.get("/getPersonsWithInsurance", cors(), (req, res, next) => {
   getJsonData().then((jsonData) => {
     getPersonsWithInsurance(jsonData)
       .then((response) => {
@@ -158,7 +167,7 @@ function getPersonsByCar(jsonData, color) {
       let child = "";
       if (person.Car !== undefined) {
         if (person.Car.length === undefined && person.Car.color === color) {
-          carArray.push((child = person.Name));
+          perArray.push((child = person.Name));
         } else if (person.Car.length > 1) {
           person.Car.forEach((car) => {
             if (car.Color === color) {
@@ -169,7 +178,7 @@ function getPersonsByCar(jsonData, color) {
         }
       }
     });
-    if (carArray.length === 0) reject("No data available");
+    if (perArray.length === 0) reject("No data available");
     resolve(perArray);
   });
 }
