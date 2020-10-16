@@ -56,8 +56,8 @@ function App() {
         alignItems="center"
         justifyContent="center"
       >
-        <Box m="auto">{plate.type}</Box>
-        <Box m="auto">{plate.color}</Box>
+        <Box m="auto">{plate === undefined ? "" : plate.type}</Box>
+        <Box m="auto">{plate === undefined ? "" : plate.color}</Box>
       </Box>
       <Box display="flex" width={1500} height={80} bgcolor="lightblue">
         <Box m="auto">
