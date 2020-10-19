@@ -195,7 +195,7 @@ function filterPersonByAge(jsonData, age) {
     jsonObj.People.Person.forEach((person) => {
       let child = "";
       if (person.Age !== undefined) {
-        if (person.Age >= age) {
+        if (person.Age >= Number(age)) {
           perArray.push((child = person.Name));
         }
       }
