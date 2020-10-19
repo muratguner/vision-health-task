@@ -39,7 +39,7 @@ function App() {
 
   return (
     <div className="App">
-      <Box display="flex" width={1500} height={80} bgcolor="lightblue">
+      <Box display="flex" m="auto" height={80} bgcolor="lightblue">
         <Box m="auto">
           <TextField
             id="standard-basic"
@@ -50,7 +50,7 @@ function App() {
       </Box>
       <Box
         display="flex"
-        width={1500}
+        m="auto"
         height={80}
         bgcolor={plate === undefined ? "white" : plate.color}
         alignItems="center"
@@ -59,7 +59,7 @@ function App() {
         <Box m="auto">{plate === undefined ? "" : plate.type}</Box>
         <Box m="auto">{plate === undefined ? "" : plate.color}</Box>
       </Box>
-      <Box display="flex" width={1500} height={80} bgcolor="lightblue">
+      <Box display="flex" m="auto" height={80} bgcolor="lightblue">
         <Box m="auto">
           <TextField
             id="standard-basic"
@@ -70,7 +70,7 @@ function App() {
       </Box>
       <Box
         display="flex"
-        width={1500}
+        m="auto"
         height={80}
         bgcolor={color}
         alignItems="center"
@@ -81,7 +81,7 @@ function App() {
             persons.map((value) => <div key={value}>{value}</div>)}
         </Box>
       </Box>
-      <Box display="flex" width={1500} height={80} bgcolor="lightblue">
+      <Box display="flex" m="auto" height={80} bgcolor="lightblue">
         <Box m="auto">
           <TextField
             id="standard-basic"
@@ -92,7 +92,7 @@ function App() {
       </Box>
       <Box
         display="flex"
-        width={1500}
+        m="auto"
         height={80}
         alignItems="center"
         justifyContent="center"
